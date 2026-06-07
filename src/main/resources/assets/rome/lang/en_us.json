@@ -1,0 +1,12 @@
+{
+  "tab.rome": "Porphyra Rome",
+
+  "item.rome.hammer": "Construction Hammer",
+  "item.rome.hammer.icon.charging": "\uD83D\uDD28",
+  "item.rome.hammer.icon.ready": "✅",
+  "item.rome.hammer.charging": "Charging: %s%%",
+  "item.rome.hammer.yes_build_single": "%d building under construction",
+  "item.rome.hammer.yes_build_plural": "%d buildings under construction",
+  "item.rome.hammer.no_build": "❌ No buildings under construction"
+
+}
