@@ -1,5 +1,5 @@
 {
-  "tab": "紫衣羅馬",
+  "tab.rome": "紫衣羅馬",
 
   "item.rome.hammer": "施工錘",
   "item.rome.hammer.icon.charging": "\uD83D\uDD28",
@@ -7,5 +7,7 @@
   "item.rome.hammer.charging": "蓄力：%s%%",
   "item.rome.hammer.yes_build_single": "%d 棟建築施工中",
   "item.rome.hammer.yes_build_plural": "%d 棟建築施工中",
-  "item.rome.hammer.no_build": "❌ 無施工中的建築"
+  "item.rome.hammer.no_build": "❌ 無施工中的建築",
+
+  "block.rome.workstation": "工作桌"
 }

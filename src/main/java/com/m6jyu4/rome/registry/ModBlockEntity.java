@@ -1,5 +1,6 @@
 package com.m6jyu4.rome.registry;
 
+import com.m6jyu4.rome.block.WorkstationBlockEntity;
 import com.m6jyu4.rome.util.Constant;
 import com.m6jyu4.rome.block.FarmBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,6 +17,10 @@ public class ModBlockEntity {
     public static final Supplier<BlockEntityType<FarmBlockEntity>> FARM_BE =
             BLOCK_ENTITIES.register("farm_be", () -> BlockEntityType.Builder.of(
                     FarmBlockEntity::new, ModBlock.FARM.get()).build(null));
+
+    public static final Supplier<BlockEntityType<WorkstationBlockEntity>> WORKSTATION_BE =
+            BLOCK_ENTITIES.register("workstation_be", () -> BlockEntityType.Builder.of(
+                    WorkstationBlockEntity::new, ModBlock.WORKSTATION.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

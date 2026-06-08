@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.item;
 
-import com.m6jyu4.rome.block.TempBlock;
+import com.m6jyu4.rome.block.ConstructableBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -29,17 +29,16 @@ public class HammerItem extends Item {
 
         if (player.level().isClientSide) {
             int percentage = calculatePercentage(livingEntity, stack, remainingUseDuration);
-            displayHammerCharging(player, percentage);
+            displayHammerPercentage(player, percentage);
         }
     }
 
     private int calculatePercentage(LivingEntity livingEntity, ItemStack stack, int remainingUseDuration){
         int ticksUsed  = this.getUseDuration(stack, livingEntity) - remainingUseDuration;
         return Math.min(100, (int) ((ticksUsed / (float) CHARGE_DURATION_TICKS) * 100));
-
     }
 
-    private void displayHammerCharging(Player player, int percentage){
+    private void displayHammerPercentage(Player player, int percentage){
         int color = percentage >= 100 ? 0x00FF00 : 0xFFAA00;
         String iconKey = percentage >= 100 ? "item.rome.hammer.icon.ready" : "item.rome.hammer.icon.charging";
         player.displayClientMessage(
@@ -60,7 +59,7 @@ public class HammerItem extends Item {
         if (ticksUsed > CHARGE_DURATION_TICKS) {
             int buildCount = constructBuilding(serverLevel, player);
             displayBuildCount(player, buildCount);
-            playHammerParticle(serverLevel, player);
+            playHammerParticle(serverLevel, player, buildCount);
             player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
         }
     }
@@ -83,9 +82,8 @@ public class HammerItem extends Item {
                 playerPos.offset(radius, radius, radius)
         )) {
             BlockState state = level.getBlockState(pos);
-            if (state.getBlock() instanceof TempBlock block) {
-                block.onHammerSwing(level, pos, state, player);
-                buildCount++;
+            if (state.getBlock() instanceof ConstructableBlock constructableBlock) {
+                if (constructableBlock.onHammerSwing(level, pos, state)) buildCount++;
             }
         }
         return buildCount;
@@ -100,14 +98,19 @@ public class HammerItem extends Item {
         player.displayClientMessage(message, true);
     }
 
-    private void playHammerParticle(ServerLevel serverLevel, Player player){
-        serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.ANVIL_LAND, SoundSource.PLAYERS,
-                1.0F, 1.0F);
-
+    private void playHammerParticle(ServerLevel serverLevel, Player player, int buildCount){
         serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK,
                 player.getX(), player.getY() + 1, player.getZ(),
                 1, 0, 0, 0, 0);
+        if (buildCount >= 1) {
+            serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.VILLAGER_WORK_FLETCHER, SoundSource.BLOCKS,
+                    0.3F, 1.0F);
+        } else {
+            serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS,
+                    0.15F, 1.0F);
+        }
     }
 
     @Override

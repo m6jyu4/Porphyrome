@@ -1,7 +1,8 @@
 package com.m6jyu4.rome.registry;
 
+import com.m6jyu4.rome.block.WorkstationBlock;
 import com.m6jyu4.rome.util.Constant;
-import com.m6jyu4.rome.block.TempBlock;
+import com.m6jyu4.rome.block.ConstructableBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -33,7 +34,18 @@ public class ModBlock {
     );
     public static final DeferredBlock<Block> TEMP = registerBlock(
             "temp",
-            () -> new TempBlock(
+            () -> new ConstructableBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+            )
+    );
+    public static final DeferredBlock<Block> WORKSTATION = registerBlock(
+            "workstation",
+            () -> new WorkstationBlock(
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_BLUE)
                             .sound(SoundType.AMETHYST)

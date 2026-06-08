@@ -25,6 +25,7 @@ public class ModCreativeTab {
                         output.accept(Items.BEETROOT_SOUP);
                         output.accept(ModBlock.TEMP.get());
                         output.accept(ModItem.HAMMER.get());
+                        output.accept(ModBlock.WORKSTATION.get());
                         ///------------------------------///
 
                     }).build());
