@@ -1,0 +1,13 @@
+{
+  "type": "rome:workstation",
+  "ingredients": [
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond",
+    "count": 1
+  }
+}

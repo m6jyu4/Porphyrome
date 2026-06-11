@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "rome:block/workstation",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "rome:block/workstation"
+    },
+    "facing=south": {
+      "model": "rome:block/workstation",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rome:block/workstation",
+      "y": 270
+    }
+  }
+}

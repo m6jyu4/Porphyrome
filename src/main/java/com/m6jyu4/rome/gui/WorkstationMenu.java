@@ -1,47 +1,53 @@
 package com.m6jyu4.rome.gui;
 
+import com.m6jyu4.rome.block.WorkstationBlockEntity;
 import com.m6jyu4.rome.recipe.RecipeResultSlot;
 import com.m6jyu4.rome.recipe.WorkstationRecipe;
+import com.m6jyu4.rome.recipe.WorkstationRecipeMessage;
+import com.m6jyu4.rome.registry.ModBlock;
 import com.m6jyu4.rome.registry.ModMenuType;
 import com.m6jyu4.rome.util.InventoryCraftingUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
-public class WorkstationMenu extends AbstractContainerMenu {
-
-    private final ResultContainer outputContainer = new ResultContainer();
+public class WorkstationMenu extends BaseMenu {
+    private final ResultContainer resultContainer = new ResultContainer();
     private final Player player;
     private WorkstationRecipe selectedRecipe;
+    private int lastInventoryState = -1;
 
+    /**
+     * client-side constructor
+     * called by {@link ModMenuType#WORKSTATION_MENU}
+     *   when the server tells the client to open the screen.
+     */
     public WorkstationMenu(int id, Inventory playerInventory, RegistryFriendlyByteBuf buf) {
-        this(id, playerInventory);
+        this(id, playerInventory, ContainerLevelAccess.create(playerInventory.player.level(), buf.readBlockPos()));
     }
 
-    public WorkstationMenu(int id, Inventory playerInv) {
-        super(ModMenuType.WORKSTATION_MENU.get(), id);
-        this.player = playerInv.player;
+    /**
+     * server-side constructor
+     * called by {@link WorkstationBlockEntity#createMenu}
+     *   when the player interacts with the workstation block.
+     */
+    public WorkstationMenu(int id, Inventory playerInventory, ContainerLevelAccess access) {
+        super(ModMenuType.WORKSTATION_MENU.get(), id, access);
+        this.player = playerInventory.player;
 
-        // Output Slot
-        this.addSlot(new RecipeResultSlot(this, outputContainer, 0, 120, 35));
-
-        // Player Inventory Slots
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-        for (int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
-        }
+        this.addSlot(new RecipeResultSlot(this, resultContainer, 0, 120, 35));
+        addStandardInventorySlots(playerInventory);
     }
 
-    // Called via Network Packet when player clicks a recipe in the GUI
+    /**
+     * called by {@link WorkstationRecipeMessage#handle}
+     *   when player clicks a recipe in the GUI.
+     */
     public void setSelectedRecipe(WorkstationRecipe recipe) {
         this.selectedRecipe = recipe;
         updateOutputSlot();
@@ -51,35 +57,34 @@ public class WorkstationMenu extends AbstractContainerMenu {
         return this.selectedRecipe;
     }
 
-    // Evaluates if we should show the ghost item in the output slot
-    // Evaluates if we should show the ghost item in the output slot
     public void updateOutputSlot() {
-        // Change selectedRecipe.getIngredients() to selectedRecipe.sizedIngredients()
         if (selectedRecipe != null && InventoryCraftingUtil.hasIngredients(player.getInventory(), selectedRecipe.sizedIngredients())) {
-            // Show the result!
-            outputContainer.setItem(0, selectedRecipe.output().copy());
+            this.resultContainer.setItem(0, selectedRecipe.output().copy());
         } else {
-            // Clear the slot if they don't have the items or no recipe is selected
-            outputContainer.setItem(0, ItemStack.EMPTY);
+            this.resultContainer.setItem(0, ItemStack.EMPTY);
         }
-        this.broadcastChanges();
-    }
-
-
-    @Override
-    public ItemStack quickMoveStack(Player player, int i) {
-        return null;
     }
 
     @Override
     public void slotsChanged(Container container) {
-        // If player moves items in their inventory, re-evaluate the output slot
-        updateOutputSlot();
         super.slotsChanged(container);
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return true;
+    public void broadcastChanges() {
+        if (this.player != null) {
+            int currentState = this.player.getInventory().getTimesChanged();
+
+            if (this.lastInventoryState != currentState) {
+                this.updateOutputSlot();
+                this.lastInventoryState = currentState;
+            }
+        }
+
+        super.broadcastChanges();
+    }
+
+    protected Block getBlock() {
+        return ModBlock.WORKSTATION.get();
     }
 }

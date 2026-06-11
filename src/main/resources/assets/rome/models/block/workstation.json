@@ -1,0 +1,152 @@
+{
+  "credit": "Made with Blockbench by Jyu4",
+  "parent": "block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "3": "rome:block/generic_bigroot_stage_0",
+    "4": "rome:block/red_bigroot_top",
+    "5": "rome:block/generic_bigroot_bottom",
+    "6": "rome:block/red_bigroot_side",
+    "7": "rome:item/red_beetroot",
+    "8": "minecraft:block/oak_planks",
+    "9": "minecraft:block/item_frame",
+    "10": "rome:block/workstation_top",
+    "particle": "minecraft:block/oak_planks"
+  },
+  "elements": [
+    {
+      "name": "bigroot_stage_0",
+      "from": [-2, 12, 9],
+      "to": [14, 28, 9],
+      "shade": false,
+      "rotation": {"angle": -45, "axis": "y", "origin": [6, 12, 9]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#3"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#3"}
+      }
+    },
+    {
+      "name": "bigroot_stage_0",
+      "from": [-2, 12, 9],
+      "to": [14, 28, 9],
+      "shade": false,
+      "rotation": {"angle": 45, "axis": "y", "origin": [6, 12, 9]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#3"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#3"}
+      }
+    },
+    {
+      "name": "bigrootstage_0",
+      "from": [3, 8, 6],
+      "to": [9, 12, 12],
+      "rotation": {"angle": 0, "axis": "y", "origin": [-2, 9, 1]},
+      "faces": {
+        "north": {"uv": [3, 10, 9, 14], "texture": "#6"},
+        "east": {"uv": [3, 10, 9, 14], "texture": "#6"},
+        "south": {"uv": [3, 10, 9, 14], "texture": "#6"},
+        "west": {"uv": [3, 10, 9, 14], "texture": "#6"},
+        "up": {"uv": [5, 5, 11, 11], "texture": "#4"},
+        "down": {"uv": [5, 5, 11, 11], "texture": "#5"}
+      }
+    },
+    {
+      "name": "leg",
+      "from": [11, 0, 2],
+      "to": [14, 5, 4],
+      "faces": {
+        "north": {"uv": [7, 7, 10, 12], "texture": "#8"},
+        "east": {"uv": [11, 11, 13, 16], "texture": "#8"},
+        "south": {"uv": [8, 7, 11, 12], "texture": "#8"},
+        "west": {"uv": [0, 11, 2, 16], "texture": "#8"},
+        "down": {"uv": [16, 9, 13, 11], "texture": "#8"}
+      }
+    },
+    {
+      "name": "leg",
+      "from": [11, 0, 12],
+      "to": [14, 5, 14],
+      "faces": {
+        "north": {"uv": [8.5, 7, 11.5, 12], "texture": "#8"},
+        "east": {"uv": [1, 11, 3, 16], "texture": "#8"},
+        "south": {"uv": [10.5, 11, 13.5, 16], "texture": "#8"},
+        "west": {"uv": [2, 11, 4, 16], "texture": "#8"},
+        "down": {"uv": [15, 12, 12, 14], "texture": "#8"}
+      }
+    },
+    {
+      "name": "leg",
+      "from": [2, 0, 2],
+      "to": [5, 5, 4],
+      "faces": {
+        "north": {"uv": [10, 7, 13, 12], "texture": "#8"},
+        "east": {"uv": [3, 11, 5, 16], "texture": "#8"},
+        "south": {"uv": [8, 11, 11, 16], "texture": "#8"},
+        "west": {"uv": [4, 11, 6, 16], "texture": "#8"},
+        "down": {"uv": [15.5, 5, 12.5, 7], "texture": "#8"}
+      }
+    },
+    {
+      "name": "leg",
+      "from": [2, 0, 12],
+      "to": [5, 5, 14],
+      "faces": {
+        "north": {"uv": [6.5, 3, 9.5, 8], "texture": "#8"},
+        "east": {"uv": [5, 11, 7, 16], "texture": "#8"},
+        "south": {"uv": [9.5, 11, 12.5, 16], "texture": "#8"},
+        "west": {"uv": [2, 11, 4, 16], "texture": "#8"},
+        "down": {"uv": [14.5, 8, 11.5, 10], "texture": "#8"}
+      }
+    },
+    {
+      "name": "table",
+      "from": [0, 5, 2],
+      "to": [16, 8, 14],
+      "faces": {
+        "north": {"uv": [0, 3, 16, 6], "texture": "#8"},
+        "east": {"uv": [4, 7, 16, 10], "texture": "#8"},
+        "south": {"uv": [0, 3, 16, 6], "texture": "#8"},
+        "west": {"uv": [4, 7, 16, 10], "texture": "#8"},
+        "up": {"uv": [16, 14, 0, 2], "texture": "#9"},
+        "down": {"uv": [16, 2, 0, 14], "texture": "#8"}
+      }
+    },
+    {
+      "name": "beetroot",
+      "from": [7.76534, 8.1, 1.87496],
+      "to": [13.76534, 8.1, 7.87496],
+      "rotation": {"angle": 22.5, "axis": "y", "origin": [13.76534, 8, 1.87496]},
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#7"},
+        "down": {"uv": [0, 16, 16, 0], "rotation": 180, "texture": "#7"}
+      }
+    },
+    {
+      "from": [0, 8.001, 2],
+      "to": [16, 8.001, 14],
+      "faces": {
+        "north": {"uv": [0, 0, 2, 0], "texture": "#missing"},
+        "east": {"uv": [0, 0, 2, 0], "texture": "#missing"},
+        "south": {"uv": [0, 0, 2, 0], "texture": "#missing"},
+        "west": {"uv": [0, 0, 2, 0], "texture": "#missing"},
+        "up": {"uv": [0, 2, 16, 14], "texture": "#10"},
+        "down": {"uv": [0, 0, 2, 2], "texture": "#missing"}
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "bigroot",
+      "origin": [0, 9, 0],
+      "color": 0,
+      "children": [0, 1, 2]
+    },
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ]
+}
