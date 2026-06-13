@@ -54,16 +54,7 @@ public class ModBlock {
                             .strength(1.5F)
             )
     );
-//    public static final DeferredBlock<Block> NEXUS = registerBlock(
-//            "nexus",
-//            () -> new MineralBlock(
-//                    BlockBehaviour.Properties.of()
-//                            .randomTicks()
-//                            .mapColor(MapColor.GOLD)
-//                            .sound(SoundType.AMETHYST)
-//                            .strength(1.5F)
-//            )
-//    );
+
     ///------------------------------///
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {

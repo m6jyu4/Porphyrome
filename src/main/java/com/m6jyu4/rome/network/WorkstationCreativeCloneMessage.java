@@ -19,4 +19,6 @@ public record WorkstationCreativeCloneMessage(ItemStack stack) implements Custom
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
+
+
 }

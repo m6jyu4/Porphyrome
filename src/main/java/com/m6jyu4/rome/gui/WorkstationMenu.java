@@ -22,8 +22,6 @@ public class WorkstationMenu extends BaseMenu {
     private WorkstationRecipe selectedRecipe;
     private int lastInventoryState = -1;
 
-
-
     /**
      * server-side menu constructor
      * called by {@link WorkstationBlockEntity#createMenu}
