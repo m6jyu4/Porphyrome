@@ -8,6 +8,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseMenu extends AbstractContainerMenu {
@@ -18,21 +19,21 @@ public abstract class BaseMenu extends AbstractContainerMenu {
         this.access = access;
     }
 
-    protected void addStandardInventorySlots(Inventory playerInventory){
+    protected void addStandardInventorySlots(Inventory playerInventory, int x, int y){
         // Inventory
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, x + j * 18, y + i * 18));
             }
         }
         // Hotbar
         for (int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
+            this.addSlot(new Slot(playerInventory, k, x + k * 18, y + 58));
         }
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
@@ -78,7 +79,6 @@ public abstract class BaseMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        // Automatically checks if the player is within 8 blocks of our specific block!
         return AbstractContainerMenu.stillValid(this.access, player, this.getBlock());
     }
 

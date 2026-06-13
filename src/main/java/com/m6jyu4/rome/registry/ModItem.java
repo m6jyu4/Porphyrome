@@ -1,7 +1,7 @@
 package com.m6jyu4.rome.registry;
 
 import com.m6jyu4.rome.item.HammerItem;
-import com.m6jyu4.rome.util.Constant;
+import com.m6jyu4.rome.Constant;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;

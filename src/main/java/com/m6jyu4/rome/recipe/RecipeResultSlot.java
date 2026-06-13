@@ -1,7 +1,6 @@
 package com.m6jyu4.rome.recipe;
 
 import com.m6jyu4.rome.gui.WorkstationMenu;
-import com.m6jyu4.rome.util.InventoryCraftingUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;

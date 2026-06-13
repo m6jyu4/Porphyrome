@@ -1,7 +1,7 @@
 package com.m6jyu4.rome.registry;
 
 import com.m6jyu4.rome.block.WorkstationBlockEntity;
-import com.m6jyu4.rome.util.Constant;
+import com.m6jyu4.rome.Constant;
 import com.m6jyu4.rome.block.FarmBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;

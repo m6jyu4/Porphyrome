@@ -1,7 +1,8 @@
-package com.m6jyu4.rome.recipe;
+package com.m6jyu4.rome.network;
 
 import com.m6jyu4.rome.gui.WorkstationMenu;
-import com.m6jyu4.rome.util.Constant;
+import com.m6jyu4.rome.recipe.WorkstationRecipe;
+import com.m6jyu4.rome.Constant;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -16,8 +17,7 @@ import java.util.Optional;
 
 public record WorkstationRecipeMessage(int containerId, ResourceLocation recipeId) implements CustomPacketPayload {
 
-    public static final Type<WorkstationRecipeMessage> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(Constant.MOD_ID, "workstation_select_recipe"));
+    public static final Type<WorkstationRecipeMessage> TYPE = new Type<>(Constant.rl("workstation_select_recipe"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, WorkstationRecipeMessage> STREAM_CODEC =
             StreamCodec.composite(
@@ -31,7 +31,6 @@ public record WorkstationRecipeMessage(int containerId, ResourceLocation recipeI
         return TYPE;
     }
 
-    // This runs on the SERVER when it receives the packet from the CLIENT
     // This runs on the SERVER when it receives the packet from the CLIENT
     public static void handle(WorkstationRecipeMessage payload, IPayloadContext context) {
         context.enqueueWork(() -> {

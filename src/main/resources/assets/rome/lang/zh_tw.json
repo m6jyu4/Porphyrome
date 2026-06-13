@@ -9,5 +9,7 @@
   "item.rome.hammer.yes_build_plural": "%d 棟建築施工中",
   "item.rome.hammer.no_build": "❌ 無施工中的建築",
 
-  "block.rome.workstation": "工作桌"
+  "block.rome.workstation": "工作桌",
+
+  "gui.rome.search": "搜尋"
 }

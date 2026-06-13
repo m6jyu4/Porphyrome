@@ -1,8 +1,7 @@
 package com.m6jyu4.rome;
 
 import com.m6jyu4.rome.registry.*;
-import com.m6jyu4.rome.util.ClientEvent;
-import com.m6jyu4.rome.util.Constant;
+import com.m6jyu4.rome.registry.ModClientEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -19,12 +18,11 @@ public class RomeMod {
 
         modEventBus.addListener(ModCapability::registerCaps);
 
-
         ModMenuType.MENUS.register(modEventBus);
         ModRecipe.register(modEventBus);
 
         if (FMLEnvironment.dist.isClient()) {
-            ClientEvent clientEvents = new ClientEvent();
+            ModClientEvent clientEvents = new ModClientEvent();
             modEventBus.addListener(clientEvents::registerScreens);
         }
 

@@ -4,6 +4,22 @@
     {
       "item": "minecraft:stick",
       "count": 2
+    },
+    {
+      "item": "minecraft:stone",
+      "count": 2
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 2
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 2
     }
   ],
   "result": {

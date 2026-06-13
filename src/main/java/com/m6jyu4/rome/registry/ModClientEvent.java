@@ -1,10 +1,9 @@
-package com.m6jyu4.rome.util;
+package com.m6jyu4.rome.registry;
 
 import com.m6jyu4.rome.gui.WorkstationScreen;
-import com.m6jyu4.rome.registry.ModMenuType;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
-public class ClientEvent {
+public class ModClientEvent {
     public void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenuType.WORKSTATION_MENU.get(), WorkstationScreen::new);
     }
