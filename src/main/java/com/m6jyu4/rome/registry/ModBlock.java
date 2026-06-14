@@ -1,5 +1,7 @@
 package com.m6jyu4.rome.registry;
 
+import com.m6jyu4.rome.block.HippodromeBlock;
+import com.m6jyu4.rome.block.ManorBlock;
 import com.m6jyu4.rome.block.WorkstationBlock;
 import com.m6jyu4.rome.Constant;
 import com.m6jyu4.rome.block.ConstructableBlock;
@@ -21,6 +23,43 @@ public class ModBlock {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Constant.MOD_ID);
 
     ///------------------------------///
+    public static final DeferredBlock<Block> WORKSTATION = registerBlock(
+            "workstation",
+            () -> new WorkstationBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+            )
+    );
+    public static final DeferredBlock<Block> MANOR = registerBlock(
+            "manor",
+            () -> new ManorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .noCollission()
+                            .noOcclusion()
+            )
+    );
+    public static final DeferredBlock<Block> HIPPODROME = registerBlock(
+            "hippodrome",
+            () -> new HippodromeBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .noCollission()
+                            .noOcclusion()
+            )
+    );
     public static final DeferredBlock<Block> FARM = registerBlock(
             "farm",
             () -> new FarmBlock(
@@ -41,19 +80,11 @@ public class ModBlock {
                             .pushReaction(PushReaction.DESTROY)
                             .requiresCorrectToolForDrops()
                             .strength(1.5F)
+                            .noCollission()
+                            .noOcclusion()
             )
     );
-    public static final DeferredBlock<Block> WORKSTATION = registerBlock(
-            "workstation",
-            () -> new WorkstationBlock(
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.COLOR_BLUE)
-                            .sound(SoundType.AMETHYST)
-                            .pushReaction(PushReaction.DESTROY)
-                            .requiresCorrectToolForDrops()
-                            .strength(1.5F)
-            )
-    );
+
 
     ///------------------------------///
 

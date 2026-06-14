@@ -10,6 +10,8 @@
   "item.rome.hammer.no_build": "❌ 無施工中的建築",
 
   "block.rome.workstation": "工作桌",
+  "gui.rome.search": "搜尋",
 
-  "gui.rome.search": "搜尋"
+  "block.rome.manor": "莊園",
+  "block.rome.hippodrome": "賽馬場"
 }

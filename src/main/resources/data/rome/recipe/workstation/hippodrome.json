@@ -1,0 +1,21 @@
+{
+  "type": "rome:workstation",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    },
+    {
+      "item": "minecraft:oak_planks",
+      "count": 16
+    },
+    {
+      "item": "minecraft:brick",
+      "count": 32
+    }
+  ],
+  "result": {
+    "id": "rome:hippodrome",
+    "count": 1
+  }
+}

@@ -158,13 +158,25 @@ public class WorkstationScreen extends AbstractContainerScreen<WorkstationMenu> 
         drawRecipeIngredients(graphics);
     }
 
+    private int lastInventoryState = -1;
+
+
     @Override
     protected void containerTick() {
         super.containerTick();
-        if (this.menu.getSelectedRecipe() != null) {
-            this.menu.updateOutputSlot();
+
+        if (this.menu.getSelectedRecipe() != null && this.minecraft != null && this.minecraft.player != null) {
+            // Get the current state ID of the player's inventory
+            int currentState = this.minecraft.player.getInventory().getTimesChanged();
+
+            // Only update the slot if the inventory has actually changed since the last tick!
+            if (this.lastInventoryState != currentState) {
+                this.menu.updateOutputSlot();
+                this.lastInventoryState = currentState; // Update our tracker
+            }
         }
     }
+
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {

@@ -10,7 +10,8 @@
   "item.rome.hammer.no_build": "❌ No buildings under construction",
 
   "block.rome.workstation": "Workstation",
+  "gui.rome.search": "Search",
 
-  "gui.rome.search": "Search"
-
+  "block.rome.manor": "Manor",
+  "block.rome.hippodrome": "Hippodrome"
 }

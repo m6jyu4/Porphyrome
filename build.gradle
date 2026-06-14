@@ -59,6 +59,17 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+
+        world {
+            client()
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArguments.add "--quickPlaySingleplayer"
+            programArguments.add "New World"
+        }
+
+
         server {
             server()
             programArgument '--nogui'

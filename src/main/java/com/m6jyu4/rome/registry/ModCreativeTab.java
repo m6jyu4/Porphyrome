@@ -20,12 +20,12 @@ public class ModCreativeTab {
                     .displayItems((itemDisplayParameters, output) -> {
 
                         ///------------------------------///
-                        output.accept(Items.BEETROOT_SEEDS);
-                        output.accept(Items.BEETROOT);
-                        output.accept(Items.BEETROOT_SOUP);
-                        output.accept(ModBlock.TEMP.get());
                         output.accept(ModItem.HAMMER.get());
                         output.accept(ModBlock.WORKSTATION.get());
+                        output.accept(ModBlock.MANOR.get());
+                        output.accept(ModBlock.HIPPODROME.get());
+
+                        output.accept(ModBlock.TEMP.get());
                         ///------------------------------///
 
                     }).build());

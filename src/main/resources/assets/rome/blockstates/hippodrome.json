@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "rome:block/hippodrome",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "rome:block/hippodrome"
+    },
+    "facing=south": {
+      "model": "rome:block/hippodrome",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rome:block/hippodrome",
+      "y": 270
+    }
+  }
+}

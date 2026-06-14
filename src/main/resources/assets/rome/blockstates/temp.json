@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "rome:block/manor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "rome:block/manor"
+    },
+    "facing=south": {
+      "model": "rome:block/manor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rome:block/manor",
+      "y": 270
+    }
+  }
+}
