@@ -1,24 +1,27 @@
 package com.m6jyu4.rome.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.piston.MovingPistonBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class ConstructableBlock extends Block {
+public class ConstructableBlock extends Block implements EntityBlock{
 
     private static final int MIN_CONSTRUCTION = 0;
     private static final int MAX_CONSTRUCTION = 3;
+
+    protected static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 6, 14);
 
     public static final IntegerProperty CONSTRUCTION_PROGRESS = IntegerProperty.create("construction_progress", MIN_CONSTRUCTION, MAX_CONSTRUCTION);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -78,5 +81,15 @@ public class ConstructableBlock extends Block {
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return null;
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 }

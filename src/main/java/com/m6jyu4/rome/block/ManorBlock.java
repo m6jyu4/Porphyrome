@@ -1,17 +1,12 @@
 package com.m6jyu4.rome.block;
 
+import com.m6jyu4.rome.blockentity.ManorBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class ManorBlock extends ConstructableBlock implements EntityBlock {
-    protected static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 6, 14);
+public class ManorBlock extends ConstructableBlock {
 
     public ManorBlock(Properties properties) {
         super(properties);
@@ -22,7 +17,4 @@ public class ManorBlock extends ConstructableBlock implements EntityBlock {
         return new ManorBlockEntity(blockPos, blockState);
     }
 
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
-    }
 }

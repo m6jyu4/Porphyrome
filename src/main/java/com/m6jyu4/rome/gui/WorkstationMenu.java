@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.gui;
 
-import com.m6jyu4.rome.block.WorkstationBlockEntity;
+import com.m6jyu4.rome.blockentity.WorkstationBlockEntity;
 import com.m6jyu4.rome.recipe.RecipeResultSlot;
 import com.m6jyu4.rome.recipe.WorkstationRecipe;
 import com.m6jyu4.rome.network.WorkstationRecipeMessage;

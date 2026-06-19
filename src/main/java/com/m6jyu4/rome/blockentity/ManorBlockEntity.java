@@ -1,4 +1,4 @@
-package com.m6jyu4.rome.block;
+package com.m6jyu4.rome.blockentity;
 
 import com.m6jyu4.rome.registry.ModBlockEntity;
 import net.minecraft.core.BlockPos;

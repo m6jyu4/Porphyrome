@@ -13,5 +13,7 @@
   "gui.rome.search": "Search",
 
   "block.rome.manor": "Manor",
-  "block.rome.hippodrome": "Hippodrome"
+  "block.rome.hippodrome": "Hippodrome",
+  "block.rome.palace": "Palace",
+  "block.rome.hagia_sophia": "Hagia Sophia"
 }

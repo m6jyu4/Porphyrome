@@ -1,0 +1,7 @@
+{
+  "loader": "rome:mimic_loader",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "rome:block/mimic_block_fallback"
+  }
+}

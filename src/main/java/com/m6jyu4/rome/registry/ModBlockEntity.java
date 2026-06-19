@@ -1,7 +1,8 @@
 package com.m6jyu4.rome.registry;
 
-import com.m6jyu4.rome.block.*;
 import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.block.temp.MimicBlockEntity;
+import com.m6jyu4.rome.blockentity.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -13,9 +14,17 @@ public class ModBlockEntity {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Constant.MOD_ID);
 
+    public static final Supplier<BlockEntityType<MimicBlockEntity>> MIMIC_BE =
+            BLOCK_ENTITIES.register("mimic_be", () -> BlockEntityType.Builder.of(
+                    MimicBlockEntity::new, ModBlock.MIMIC.get()).build(null));
+
     public static final Supplier<BlockEntityType<WorkstationBlockEntity>> WORKSTATION_BE =
             BLOCK_ENTITIES.register("workstation_be", () -> BlockEntityType.Builder.of(
                     WorkstationBlockEntity::new, ModBlock.WORKSTATION.get()).build(null));
+
+    public static final Supplier<BlockEntityType<PalaceBlockEntity>> PALACE_BE =
+            BLOCK_ENTITIES.register("palace_be", () -> BlockEntityType.Builder.of(
+                    PalaceBlockEntity::new, ModBlock.PALACE.get()).build(null));
 
     public static final Supplier<BlockEntityType<ManorBlockEntity>> MANOR_BE =
             BLOCK_ENTITIES.register("manor_be", () -> BlockEntityType.Builder.of(
@@ -24,6 +33,10 @@ public class ModBlockEntity {
     public static final Supplier<BlockEntityType<HippodromeBlockEntity>> HIPPODROME_BE =
             BLOCK_ENTITIES.register("hippodrome_be", () -> BlockEntityType.Builder.of(
                     HippodromeBlockEntity::new, ModBlock.HIPPODROME.get()).build(null));
+
+    public static final Supplier<BlockEntityType<HagiaSophiaBlockEntity>> HAGIA_SOPHIA_BE =
+            BLOCK_ENTITIES.register("hagia_sophia_be", () -> BlockEntityType.Builder.of(
+                    HagiaSophiaBlockEntity::new, ModBlock.HAGIA_SOPHIA.get()).build(null));
 
     public static final Supplier<BlockEntityType<FarmBlockEntity>> FARM_BE =
             BLOCK_ENTITIES.register("farm_be", () -> BlockEntityType.Builder.of(

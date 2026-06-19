@@ -1,4 +1,4 @@
-package com.m6jyu4.rome.block;
+package com.m6jyu4.rome.blockentity;
 
 import com.m6jyu4.rome.gui.WorkstationMenu;
 import com.m6jyu4.rome.registry.ModBlockEntity;

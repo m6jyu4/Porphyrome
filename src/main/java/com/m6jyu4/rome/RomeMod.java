@@ -24,6 +24,7 @@ public class RomeMod {
         if (FMLEnvironment.dist.isClient()) {
             ModClientEvent clientEvents = new ModClientEvent();
             modEventBus.addListener(clientEvents::registerScreens);
+            modEventBus.addListener(ModClientEvent::registerGeometryLoaders);
         }
 
         ModNetworking networking = new ModNetworking();

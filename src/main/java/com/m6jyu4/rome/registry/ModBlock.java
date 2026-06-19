@@ -1,10 +1,8 @@
 package com.m6jyu4.rome.registry;
 
-import com.m6jyu4.rome.block.HippodromeBlock;
-import com.m6jyu4.rome.block.ManorBlock;
-import com.m6jyu4.rome.block.WorkstationBlock;
+import com.m6jyu4.rome.block.*;
 import com.m6jyu4.rome.Constant;
-import com.m6jyu4.rome.block.ConstructableBlock;
+import com.m6jyu4.rome.block.temp.MimicBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -23,6 +21,17 @@ public class ModBlock {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Constant.MOD_ID);
 
     ///------------------------------///
+    public static final DeferredBlock<Block> MIMIC = registerBlock(
+            "mimic",
+            () -> new MimicBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+            )
+    );
     public static final DeferredBlock<Block> WORKSTATION = registerBlock(
             "workstation",
             () -> new WorkstationBlock(
@@ -32,6 +41,32 @@ public class ModBlock {
                             .pushReaction(PushReaction.DESTROY)
                             .requiresCorrectToolForDrops()
                             .strength(1.5F)
+            )
+    );
+    public static final DeferredBlock<Block> PALACE = registerBlock(
+            "palace",
+            () -> new PalaceBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .noCollission()
+                            .noOcclusion()
+            )
+    );
+    public static final DeferredBlock<Block> HAGIA_SOPHIA = registerBlock(
+            "hagia_sophia",
+            () -> new HagiaSophiaBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .noCollission()
+                            .noOcclusion()
             )
     );
     public static final DeferredBlock<Block> MANOR = registerBlock(

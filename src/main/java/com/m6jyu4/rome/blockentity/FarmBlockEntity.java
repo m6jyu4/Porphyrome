@@ -1,6 +1,7 @@
-package com.m6jyu4.rome.block;
+package com.m6jyu4.rome.blockentity;
 
 import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.block.FarmBlock;
 import com.m6jyu4.rome.capability.CropType;
 import com.m6jyu4.rome.capability.INetworkNode;
 import com.m6jyu4.rome.registry.ModBlockEntity;

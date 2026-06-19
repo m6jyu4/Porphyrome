@@ -1,5 +1,6 @@
 package com.m6jyu4.rome.block;
 
+import com.m6jyu4.rome.blockentity.WorkstationBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class WorkstationBlock extends BaseEntityBlock {
+public class WorkstationBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public WorkstationBlock(Properties properties) {
@@ -30,7 +31,7 @@ public class WorkstationBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends Block> codec() {
         return simpleCodec(WorkstationBlock::new);
     }
 

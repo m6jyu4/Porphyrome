@@ -13,5 +13,7 @@
   "gui.rome.search": "搜尋",
 
   "block.rome.manor": "莊園",
-  "block.rome.hippodrome": "賽馬場"
+  "block.rome.hippodrome": "賽馬場",
+  "block.rome.palace": "皇宮",
+  "block.rome.hagia_sophia": "聖索菲亞大教堂"
 }

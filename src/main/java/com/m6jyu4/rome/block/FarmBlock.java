@@ -1,5 +1,6 @@
 package com.m6jyu4.rome.block;
 
+import com.m6jyu4.rome.blockentity.FarmBlockEntity;
 import com.m6jyu4.rome.capability.CropType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -18,13 +19,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class FarmBlock extends BaseEntityBlock {
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    protected static final EnumProperty<CropType> CROP_TYPE = EnumProperty.create("crop_type", CropType.class);
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<CropType> CROP_TYPE = EnumProperty.create("crop_type", CropType.class);
 
     public FarmBlock(Properties properties) { super(properties); }
     @Override public MapCodec<? extends BaseEntityBlock> codec() { return simpleCodec(FarmBlock::new); }
     @Override public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new FarmBlockEntity(pos, state); }
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, CROP_TYPE); }
+    @Override public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, CROP_TYPE); }
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {

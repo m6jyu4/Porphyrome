@@ -22,8 +22,10 @@ public class ModCreativeTab {
                         ///------------------------------///
                         output.accept(ModItem.HAMMER.get());
                         output.accept(ModBlock.WORKSTATION.get());
+                        output.accept(ModBlock.PALACE.get());
                         output.accept(ModBlock.MANOR.get());
                         output.accept(ModBlock.HIPPODROME.get());
+                        output.accept(ModBlock.HAGIA_SOPHIA.get());
 
                         output.accept(ModBlock.TEMP.get());
                         ///------------------------------///
