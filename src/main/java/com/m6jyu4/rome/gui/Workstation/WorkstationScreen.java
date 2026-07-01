@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +26,14 @@ public class WorkstationScreen extends AbstractContainerScreen<WorkstationMenu> 
     static final int guiWidth  = 292;
     static final int guiHeight = 219;
 
-    private final WorkstationInputHandler inputHandler;
+    final WorkstationInputHandler inputHandler;
     private final WorkstationUI workstationUI;
 
     int currentPage = 0;
     List<RecipeHolder<WorkstationRecipe>> allRecipes = new ArrayList<>();
     List<RecipeHolder<WorkstationRecipe>> filteredRecipes = new ArrayList<>();
 
-    private EditBox searchBox;
+    EditBox searchBox;
 
     public WorkstationScreen(WorkstationMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -73,7 +74,7 @@ public class WorkstationScreen extends AbstractContainerScreen<WorkstationMenu> 
     private void addSearchBar() {
         this.searchBox = new CustomEditBox(Minecraft.getInstance().font, leftPos + 26, topPos + 16, 78, 14, Component.translatable("gui.rome.search"));
         searchBox.setMaxLength(50);
-        this.searchBox.setResponder(workstationUI::updateSearch);
+        this.searchBox.setResponder(this::updateSearch);
         addRenderableWidget(this.searchBox);
     }
 
@@ -87,7 +88,7 @@ public class WorkstationScreen extends AbstractContainerScreen<WorkstationMenu> 
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick); // and renderLabels
-        workstationUI.renderUI(guiGraphics);
+        workstationUI.renderUI(guiGraphics, mouseX, mouseY);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
@@ -106,6 +107,73 @@ public class WorkstationScreen extends AbstractContainerScreen<WorkstationMenu> 
     protected void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderTooltip(guiGraphics, mouseX, mouseY);
         workstationUI.renderTooltips(guiGraphics, mouseX, mouseY);
+    }
+
+    /* KEYBOARD */
+    private boolean ignoreTextInput;
+
+    void updateSearch(String query) {
+        filteredRecipes.clear();
+        String lowerQuery = query.toLowerCase();
+
+        for (RecipeHolder<WorkstationRecipe> recipe : allRecipes) {
+            String itemName = recipe.value().output().getHoverName().getString().toLowerCase();
+            if (itemName.contains(lowerQuery)) {
+                filteredRecipes.add(recipe);
+            }
+        }
+        currentPage = 0;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        this.ignoreTextInput = false;
+
+        if (this.getMinecraft().options.keyChat.matches(keyCode, scanCode) && !this.searchBox.isFocused()) {
+            this.ignoreTextInput = true;
+            this.searchBox.setFocused(true);
+            return true;
+        }
+
+        if (this.searchBox.keyPressed(keyCode, scanCode, modifiers)) return true;
+        if (this.searchBox.isFocused() && keyCode != GLFW.GLFW_KEY_ESCAPE) return true;
+
+        /* PAGE NAVIGATION */
+        if (!this.searchBox.isFocused()) {
+            if (keyCode == GLFW.GLFW_KEY_HOME) {
+                if (this.currentPage != 0) this.currentPage = 0;
+                return true;
+            }
+            if (keyCode == GLFW.GLFW_KEY_END) {
+                int maxPages = (int) Math.ceil((double) this.filteredRecipes.size() / WorkstationUI.recipePerPage);
+                this.currentPage = Math.max(0, maxPages - 1);
+                return true;
+            }
+            if (keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_UP || keyCode == GLFW.GLFW_KEY_PAGE_UP) {
+                if (this.currentPage > 0) this.currentPage--;
+                return true;
+            }
+            if (keyCode == GLFW.GLFW_KEY_RIGHT || keyCode == GLFW.GLFW_KEY_DOWN || keyCode == GLFW.GLFW_KEY_PAGE_DOWN) {
+                int maxPages = (int) Math.ceil((double) this.filteredRecipes.size() / WorkstationUI.recipePerPage);
+                if (this.currentPage + 1 < maxPages) this.currentPage++;
+                return true;
+            }
+        }
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        if (this.ignoreTextInput) return true;
+        if (this.searchBox.charTyped(codePoint, modifiers)) return true;
+        return super.charTyped(codePoint, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        this.ignoreTextInput = false;
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
 }

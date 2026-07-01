@@ -40,10 +40,11 @@ class WorkstationUI {
         this.screen = screen;
     }
 
-    void renderUI(GuiGraphics guiGraphics){
+    void renderUI(GuiGraphics guiGraphics, int mouseX, int mouseY){
         renderRecipes(guiGraphics);
         renderOutputSlot(guiGraphics);
         renderIngredients(guiGraphics);
+        renderPageArrows(guiGraphics, mouseX, mouseY);
     }
     
     void renderTooltips(GuiGraphics guiGraphics, int mouseX, int mouseY){
@@ -174,18 +175,47 @@ class WorkstationUI {
         }
     }
 
-    /* SEARCH */
-    void updateSearch(String query) {
-        this.screen.filteredRecipes.clear();
-        String lowerQuery = query.toLowerCase();
+    private void renderPageArrows(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        int maxPages = (int) Math.ceil((double) this.screen.filteredRecipes.size() / recipePerPage);
 
-        for (RecipeHolder<WorkstationRecipe> recipe : screen.allRecipes) {
-            String itemName = recipe.value().output().getHoverName().getString().toLowerCase();
-            if (itemName.contains(lowerQuery)) {
-                this.screen.filteredRecipes.add(recipe);
-            }
+        int x = this.screen.getGuiLeft() + 60 + 1;
+        int y = this.screen.getGuiTop() + 211 - Minecraft.getInstance().font.lineHeight * 2 - 1;
+
+        String text = maxPages == 0 ? "0/0" : "%d/%d".formatted(this.screen.currentPage + 1, maxPages);
+        guiGraphics.drawString(Minecraft.getInstance().font, text, (int) (x - Minecraft.getInstance().font.width(text) / 2f), y + 4, 0xffffff);
+
+        if (this.screen.currentPage > 0) {
+            boolean isHovered = this.screen.inputHandler.isMouseOverLeftArrow(mouseX, mouseY);
+            renderLeftArrow(guiGraphics, x, y, isHovered);
         }
-        this.screen.currentPage = 0;
+
+        if (this.screen.currentPage + 1 < maxPages) {
+            boolean isHovered = this.screen.inputHandler.isMouseOverRightArrow(mouseX, mouseY);
+            renderRightArrow(guiGraphics, x, y, isHovered);
+        }
     }
+
+    private void renderLeftArrow(GuiGraphics guiGraphics, int x, int y, boolean isHovered) {
+        int uOffset = isHovered ? 304 : 292;
+        guiGraphics.blit(WorkstationScreen.TEXTURE,
+                x - 22 - 11 - 1, y -1,  // Adjust spacing for larger arrow width (11px)
+                0,                    // z-level
+                uOffset, 41,             // u, v (texture start)
+                12, 17,              // width=11, height=16 (your actual arrow size)
+                WorkstationScreen.textureWidth, WorkstationScreen.textureHeight
+        );
+    }
+
+    private void renderRightArrow(GuiGraphics guiGraphics, int x, int y, boolean isHovered) {
+        int uOffset = isHovered ? 304 : 292;
+        guiGraphics.blit(WorkstationScreen.TEXTURE,
+                x + 22, y -1,           // draw position
+                0,                    // z-level
+                uOffset, 24,             // u, v (texture start)
+                12, 17,              // width=11, height=16 (your actual arrow size)
+                WorkstationScreen.textureWidth, WorkstationScreen.textureHeight
+        );
+    }
+
 
 }
