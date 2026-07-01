@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.blockentity;
 
-import com.m6jyu4.rome.gui.WorkstationMenu;
+import com.m6jyu4.rome.gui.Workstation.WorkstationMenu;
 import com.m6jyu4.rome.registry.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -27,8 +27,7 @@ public class WorkstationBlockEntity extends BlockEntity implements MenuProvider 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        ContainerLevelAccess access = ContainerLevelAccess.create(this.level, this.worldPosition);
-        return new WorkstationMenu(id, playerInventory, access);
+        return new WorkstationMenu(id, playerInventory, ContainerLevelAccess.create(this.level, this.worldPosition));
     }
 
 }

@@ -17,4 +17,5 @@ public class PalaceBlock extends ConstructableBlock {
         return new PalaceBlockEntity(blockPos, blockState);
     }
 
+
 }

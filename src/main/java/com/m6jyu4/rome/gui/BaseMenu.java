@@ -19,7 +19,20 @@ public abstract class BaseMenu extends AbstractContainerMenu {
         this.access = access;
     }
 
-    protected void addStandardInventorySlots(Inventory playerInventory, int x, int y){
+    protected void addInventorySlots(Inventory playerInventory){
+        // Inventory
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+            }
+        }
+        // Hotbar
+        for (int k = 0; k < 9; ++k) {
+            this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 84 + 58));
+        }
+    }
+
+    protected void addInventorySlots(Inventory playerInventory, int x, int y){
         // Inventory
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
@@ -30,6 +43,14 @@ public abstract class BaseMenu extends AbstractContainerMenu {
         for (int k = 0; k < 9; ++k) {
             this.addSlot(new Slot(playerInventory, k, x + k * 18, y + 58));
         }
+    }
+
+
+    protected abstract Block getBlock();
+
+    @Override
+    public boolean stillValid(Player player) {
+        return AbstractContainerMenu.stillValid(this.access, player, this.getBlock());
     }
 
     @Override
@@ -74,13 +95,4 @@ public abstract class BaseMenu extends AbstractContainerMenu {
 
         return itemstack;
     }
-
-    protected abstract Block getBlock();
-
-    @Override
-    public boolean stillValid(Player player) {
-        return AbstractContainerMenu.stillValid(this.access, player, this.getBlock());
-    }
-
-
 }

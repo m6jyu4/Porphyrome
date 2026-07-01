@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.network;
 
-import com.m6jyu4.rome.gui.WorkstationMenu;
+import com.m6jyu4.rome.gui.Workstation.WorkstationMenu;
 import com.m6jyu4.rome.recipe.WorkstationRecipe;
 import com.m6jyu4.rome.Constant;
 import net.minecraft.network.RegistryFriendlyByteBuf;
