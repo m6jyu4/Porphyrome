@@ -1,5 +1,6 @@
 package com.m6jyu4.rome.registry;
 
+import com.m6jyu4.rome.network.OpenBuildingMessage;
 import com.m6jyu4.rome.network.WorkstationCreativeCloneMessage;
 import com.m6jyu4.rome.network.WorkstationRecipeMessage;
 import com.m6jyu4.rome.Constant;
@@ -20,6 +21,11 @@ public class ModNetworking {
                 WorkstationCreativeCloneMessage.TYPE,
                 WorkstationCreativeCloneMessage.STREAM_CODEC,
                 ModNetworking::handleCreativePick
+        );
+        registrar.playToServer(
+                OpenBuildingMessage.TYPE,
+                OpenBuildingMessage.STREAM_CODEC,
+                OpenBuildingMessage::handle
         );
     }
     public static void handleCreativePick(WorkstationCreativeCloneMessage payload, IPayloadContext context) {

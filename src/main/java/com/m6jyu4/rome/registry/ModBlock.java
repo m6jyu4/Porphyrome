@@ -43,6 +43,19 @@ public class ModBlock {
                             .strength(1.5F)
             )
     );
+    public static final DeferredBlock<Block> FORUM = registerBlock(
+            "forum",
+            () -> new ForumBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLUE)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .noCollission()
+                            .noOcclusion()
+            )
+    );
     public static final DeferredBlock<Block> PALACE = registerBlock(
             "palace",
             () -> new PalaceBlock(

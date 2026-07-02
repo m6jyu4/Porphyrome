@@ -1,10 +1,15 @@
 package com.m6jyu4.rome.block;
 
+import com.m6jyu4.rome.city.City;
+import com.m6jyu4.rome.city.CityManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,6 +34,35 @@ public class ConstructableBlock extends Block implements EntityBlock{
     public ConstructableBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(CONSTRUCTION_PROGRESS, MIN_CONSTRUCTION));
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+            City city = CityManager.get(serverLevel).getCityAt(pos);
+            if (city != null) {
+                city.addBuilding(pos);
+                CityManager.get(serverLevel).setDirty(); // Save the new building
+            }
+        }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+                CityManager manager = CityManager.get(serverLevel);
+
+                // --- NEW: Ask exactly who owns this building before deleting it ---
+                City city = manager.getCityOwningBuilding(pos);
+                if (city != null) {
+                    city.removeBuilding(pos);
+                    manager.setDirty(); // Save the removal
+                }
+            }
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
     }
 
     public boolean onHammerSwing(ServerLevel level, BlockPos pos, BlockState state) {

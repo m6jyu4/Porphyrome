@@ -1,6 +1,7 @@
 package com.m6jyu4.rome.registry;
 
-import com.m6jyu4.rome.gui.Workstation.WorkstationMenu;
+import com.m6jyu4.rome.gui.forum.ForumMenu;
+import com.m6jyu4.rome.gui.workstation.WorkstationMenu;
 import com.m6jyu4.rome.Constant;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.MenuType;
@@ -14,5 +15,6 @@ public class ModMenuType {
 
     // --- MENU ---
     public static final Supplier<MenuType<WorkstationMenu>> WORKSTATION_MENU = MENUS.register("workstation", () -> IMenuTypeExtension.create(WorkstationMenu::new));
+    public static final Supplier<MenuType<ForumMenu>> FORUM_MENU = MENUS.register("forum", () -> IMenuTypeExtension.create(ForumMenu::new));
 
 }

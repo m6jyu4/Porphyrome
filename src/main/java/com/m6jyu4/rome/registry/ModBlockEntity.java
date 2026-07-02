@@ -22,6 +22,10 @@ public class ModBlockEntity {
             BLOCK_ENTITIES.register("workstation_be", () -> BlockEntityType.Builder.of(
                     WorkstationBlockEntity::new, ModBlock.WORKSTATION.get()).build(null));
 
+    public static final Supplier<BlockEntityType<ForumBlockEntity>> FORUM_BE =
+            BLOCK_ENTITIES.register("forum_be", () -> BlockEntityType.Builder.of(
+                    ForumBlockEntity::new, ModBlock.FORUM.get()).build(null));
+
     public static final Supplier<BlockEntityType<PalaceBlockEntity>> PALACE_BE =
             BLOCK_ENTITIES.register("palace_be", () -> BlockEntityType.Builder.of(
                     PalaceBlockEntity::new, ModBlock.PALACE.get()).build(null));

@@ -1,4 +1,4 @@
-package com.m6jyu4.rome.gui.Workstation;
+package com.m6jyu4.rome.gui.workstation;
 
 import com.m6jyu4.rome.Constant;
 import com.m6jyu4.rome.gui.CustomEditBox;

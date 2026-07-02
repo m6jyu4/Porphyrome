@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.blockentity;
 
-import com.m6jyu4.rome.gui.Workstation.WorkstationMenu;
+import com.m6jyu4.rome.gui.workstation.WorkstationMenu;
 import com.m6jyu4.rome.registry.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

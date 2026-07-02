@@ -26,6 +26,7 @@ public class ModCreativeTab {
                         output.accept(ModBlock.MANOR.get());
                         output.accept(ModBlock.HIPPODROME.get());
                         output.accept(ModBlock.HAGIA_SOPHIA.get());
+                        output.accept(ModBlock.FORUM.get());
 
                         output.accept(ModBlock.TEMP.get());
                         ///------------------------------///

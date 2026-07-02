@@ -10,15 +10,14 @@ public record WorkstationCreativeCloneMessage(ItemStack stack) implements Custom
 
     public static final Type<WorkstationCreativeCloneMessage> TYPE = new Type<>(Constant.rl("creative_clone"));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, WorkstationCreativeCloneMessage> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC, WorkstationCreativeCloneMessage::stack,
-            WorkstationCreativeCloneMessage::new
-    );
-
     @Override
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 
+    public static final StreamCodec<RegistryFriendlyByteBuf, WorkstationCreativeCloneMessage> STREAM_CODEC = StreamCodec.composite(
+            ItemStack.STREAM_CODEC, WorkstationCreativeCloneMessage::stack,
+            WorkstationCreativeCloneMessage::new
+    );
 
 }
