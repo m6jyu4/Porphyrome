@@ -1,0 +1,12 @@
+{
+  "item.rome.hammer.yes_build.a": "%d budynek w budowie",
+  "item.rome.hammer.yes_build.b": "%d budynki w budowie",
+  "item.rome.hammer.yes_build.c": "%d budynków w budowie",
+
+  "city.rome.name": "Colonia %s",
+
+  "city.rome.annex_building_count.a": "§6Colony established! Annexed %d building",
+  "city.rome.annex_building_count.b": "§6Colony established! Annexed %d buildings",
+  "city.rome.annex_building_count.c": "§6Colony established! Annexed %d buildings"
+
+}

@@ -40,11 +40,35 @@ public class ConstructableBlock extends Block implements EntityBlock{
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-            City city = CityManager.get(serverLevel).getCityAt(pos);
+            CityManager manager = CityManager.get(serverLevel);
+            City city = manager.getCityAt(pos);
+
+            // Default values for an Unowned/Border building
+            boolean isOwned = false;
+            int color = 0x888888; // Neutral Grey
+            BlockPos ownerForumPos = pos; // Dummy fallback position
+            boolean allowsAnnex = true; // Neutral buildings can always be annexed
+
             if (city != null) {
                 city.addBuilding(pos);
-                CityManager.get(serverLevel).setDirty(); // Save the new building
+                manager.setDirty();
+                isOwned = true;
+                color = city.getColour();
+                ownerForumPos = city.getForumPos();
+                allowsAnnex = city.isAllowAnnex();
             }
+
+            ItemStack iconStack = new ItemStack(state.getBlock());
+            if (iconStack.isEmpty()) {
+                iconStack = new ItemStack(net.minecraft.world.item.Items.BRICKS);
+            }
+
+            // --- FIX 2: ALWAYS broadcast, so nearby GUIs can draw unowned border blocks live! ---
+            net.neoforged.neoforge.network.PacketDistributor.sendToAllPlayers(
+                    new com.m6jyu4.rome.network.SyncBuildingPlacedMessage(
+                            pos, iconStack, isOwned, color, ownerForumPos, allowsAnnex
+                    )
+            );
         }
     }
 
@@ -53,13 +77,17 @@ public class ConstructableBlock extends Block implements EntityBlock{
         if (!state.is(newState.getBlock())) {
             if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
                 CityManager manager = CityManager.get(serverLevel);
-
-                // --- NEW: Ask exactly who owns this building before deleting it ---
                 City city = manager.getCityOwningBuilding(pos);
+
                 if (city != null) {
                     city.removeBuilding(pos);
-                    manager.setDirty(); // Save the removal
+                    manager.setDirty();
                 }
+
+                // ALWAYS broadcast destruction so border buildings vanish live too!
+                net.neoforged.neoforge.network.PacketDistributor.sendToAllPlayers(
+                        new com.m6jyu4.rome.network.SyncBuildingRemovedMessage(pos)
+                );
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }

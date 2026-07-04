@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "rome:item/manor_item"
+    "layer0": "rome:item/item_manor"
   }
 }

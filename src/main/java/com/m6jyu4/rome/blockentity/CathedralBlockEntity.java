@@ -5,8 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HagiaSophiaBlockEntity extends BlockEntity {
-    public HagiaSophiaBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntity.HAGIA_SOPHIA_BE.get(), pos, blockState);
+public class CathedralBlockEntity extends BlockEntity {
+    public CathedralBlockEntity(BlockPos pos, BlockState blockState) {
+        super(ModBlockEntity.CATHEDRAL_BE.get(), pos, blockState);
     }
 }

@@ -69,9 +69,9 @@ public class ModBlock {
                             .noOcclusion()
             )
     );
-    public static final DeferredBlock<Block> HAGIA_SOPHIA = registerBlock(
-            "hagia_sophia",
-            () -> new HagiaSophiaBlock(
+    public static final DeferredBlock<Block> CATHEDRAL = registerBlock(
+            "cathedral",
+            () -> new CathedralBlock(
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_BLUE)
                             .sound(SoundType.AMETHYST)

@@ -5,8 +5,9 @@
   "item.rome.hammer.icon.charging": "\uD83D\uDD28",
   "item.rome.hammer.icon.ready": "✅",
   "item.rome.hammer.charging": "Charging: %s%%",
-  "item.rome.hammer.yes_build_single": "%d building under construction",
-  "item.rome.hammer.yes_build_plural": "%d buildings under construction",
+
+  "item.rome.hammer.yes_build.a": "%d building under construction",
+  "item.rome.hammer.yes_build.b": "%d buildings under construction",
   "item.rome.hammer.no_build": "❌ No buildings under construction",
 
   "block.rome.workstation": "Workstation",
@@ -15,5 +16,14 @@
   "block.rome.manor": "Manor",
   "block.rome.hippodrome": "Hippodrome",
   "block.rome.palace": "Palace",
-  "block.rome.hagia_sophia": "Hagia Sophia"
+  "block.rome.cathedral": "Cathedral",
+  "block.rome.forum": "Forum",
+
+  "city.rome.has_city": "§cThis area is occupied by another colony",
+  "city.rome.ruined_city": "§cThis Forum is ruined. Replace it to found a new colony",
+  "city.rome.name": "%s's Colony",
+
+  "city.rome.annex_building_count.a": "§6Colony established! Annexed %d building",
+  "city.rome.annex_building_count.b": "§6Colony established! Annexed %d buildings",
+  "city.rome.annex_building_count.z": "§6Colony established!"
 }

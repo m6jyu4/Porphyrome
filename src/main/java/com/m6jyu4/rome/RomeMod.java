@@ -1,5 +1,6 @@
 package com.m6jyu4.rome;
 
+import com.m6jyu4.rome.network.ModNetworking;
 import com.m6jyu4.rome.registry.*;
 import com.m6jyu4.rome.registry.ModClientEvent;
 import net.neoforged.bus.api.IEventBus;

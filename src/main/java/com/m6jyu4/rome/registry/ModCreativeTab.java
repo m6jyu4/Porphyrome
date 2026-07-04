@@ -5,7 +5,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -25,7 +24,7 @@ public class ModCreativeTab {
                         output.accept(ModBlock.PALACE.get());
                         output.accept(ModBlock.MANOR.get());
                         output.accept(ModBlock.HIPPODROME.get());
-                        output.accept(ModBlock.HAGIA_SOPHIA.get());
+                        output.accept(ModBlock.CATHEDRAL.get());
                         output.accept(ModBlock.FORUM.get());
 
                         output.accept(ModBlock.TEMP.get());

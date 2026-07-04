@@ -38,9 +38,9 @@ public class ModBlockEntity {
             BLOCK_ENTITIES.register("hippodrome_be", () -> BlockEntityType.Builder.of(
                     HippodromeBlockEntity::new, ModBlock.HIPPODROME.get()).build(null));
 
-    public static final Supplier<BlockEntityType<HagiaSophiaBlockEntity>> HAGIA_SOPHIA_BE =
+    public static final Supplier<BlockEntityType<CathedralBlockEntity>> CATHEDRAL_BE =
             BLOCK_ENTITIES.register("hagia_sophia_be", () -> BlockEntityType.Builder.of(
-                    HagiaSophiaBlockEntity::new, ModBlock.HAGIA_SOPHIA.get()).build(null));
+                    CathedralBlockEntity::new, ModBlock.CATHEDRAL.get()).build(null));
 
     public static final Supplier<BlockEntityType<FarmBlockEntity>> FARM_BE =
             BLOCK_ENTITIES.register("farm_be", () -> BlockEntityType.Builder.of(

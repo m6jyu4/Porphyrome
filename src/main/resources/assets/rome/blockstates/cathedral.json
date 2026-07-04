@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "rome:block/hagia_sophia",
+      "model": "rome:block/cathedral",
       "y": 90
     },
     "facing=north": {
-      "model": "rome:block/hagia_sophia"
+      "model": "rome:block/cathedral"
     },
     "facing=south": {
-      "model": "rome:block/hagia_sophia",
+      "model": "rome:block/cathedral",
       "y": 180
     },
     "facing=west": {
-      "model": "rome:block/hagia_sophia",
+      "model": "rome:block/cathedral",
       "y": 270
     }
   }

@@ -1,8 +1,6 @@
 package com.m6jyu4.rome.gui.forum;
 
-import com.m6jyu4.rome.city.City;
-import com.m6jyu4.rome.registry.ModMenuType; // Make sure you register FORUM_MENU!
-
+import com.m6jyu4.rome.registry.ModMenuType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,55 +13,55 @@ import java.util.List;
 
 public class ForumMenu extends AbstractContainerMenu {
 
-    public record BuildingEntry(BlockPos pos, ItemStack icon) {}
+    // NEW: Added boolean isOwned to track if it belongs to this city or a neighbor
+    public record BuildingEntry(BlockPos pos, ItemStack icon, boolean isOwned, int color, BlockPos ownerForumPos, boolean allowAnnex) {}
 
     public final String cityName;
-    public final BlockPos forumPos; // NEW
+    public final BlockPos forumPos;
     public final int tier;
     public final int radius;
     public final List<BuildingEntry> buildings = new ArrayList<>();
+    public final java.util.UUID ownerUUID;
+    public boolean allowAnnex;
 
-    // CLIENT-SIDE
+    // CLIENT-SIDE (Reads the data sent by the server)
     public ForumMenu(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
         super(ModMenuType.FORUM_MENU.get(), id);
         this.cityName = buf.readUtf();
-        this.forumPos = buf.readBlockPos(); // MUST BE SECOND!
-        this.tier = buf.readInt();          // MUST BE THIRD!
-        this.radius = buf.readInt();        // MUST BE FOURTH!
+        this.forumPos = buf.readBlockPos();
+        this.tier = buf.readInt();
+        this.radius = buf.readInt();
+        this.allowAnnex = buf.readBoolean();
+        this.ownerUUID = buf.readBoolean() ? buf.readUUID() : null;
 
         int size = buf.readInt();
         for (int i = 0; i < size; i++) {
-            this.buildings.add(new BuildingEntry(buf.readBlockPos(), ItemStack.STREAM_CODEC.decode(buf)));
+            this.buildings.add(new BuildingEntry(
+                    buf.readBlockPos(),
+                    ItemStack.OPTIONAL_STREAM_CODEC.decode(buf), // MUST BE OPTIONAL!
+                    buf.readBoolean(),
+                    buf.readInt(),
+                    buf.readBlockPos(),
+                    buf.readBoolean()
+            ));
         }
     }
 
-    // CLIENT-SIDE
-//    public ForumMenu(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
-//        super(ModMenuType.FORUM_MENU.get(), id);
-//        this.cityName = buf.readUtf();
-//        this.forumPos = buf.readBlockPos(); // NEW
-//        this.tier = buf.readInt();
-//        this.radius = buf.readInt();
-//
-//        int size = buf.readInt();
-//        for (int i = 0; i < size; i++) {
-//            this.buildings.add(new BuildingEntry(buf.readBlockPos(), ItemStack.STREAM_CODEC.decode(buf)));
-//        }
-//    }
-
     // SERVER-SIDE
-    public ForumMenu(int id, Inventory inv, City city, List<BuildingEntry> activeBuildings) {
+    public ForumMenu(int id, Inventory inv, com.m6jyu4.rome.city.City city, List<BuildingEntry> activeBuildings) {
         super(ModMenuType.FORUM_MENU.get(), id);
         this.cityName = city.getName();
-        this.forumPos = city.getForumPos(); // NEW
+        this.forumPos = city.getForumPos();
         this.tier = city.getTier();
         this.radius = city.getRadius();
         this.buildings.addAll(activeBuildings);
+        this.allowAnnex = city.isAllowAnnex(); // Assumes this getter is in City.java
+        this.ownerUUID = city.getOwnerUUID();
     }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        return ItemStack.EMPTY; // No slots to shift-click
+        return ItemStack.EMPTY;
     }
 
     @Override

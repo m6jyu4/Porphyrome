@@ -1,11 +1,15 @@
 package com.m6jyu4.rome.block;
 
+
+import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.Localisation;
 import com.m6jyu4.rome.blockentity.ForumBlockEntity;
-import com.m6jyu4.rome.blockentity.PalaceBlockEntity;
 import com.m6jyu4.rome.city.City;
+import com.m6jyu4.rome.city.CityData;
 import com.m6jyu4.rome.city.CityManager;
 import com.m6jyu4.rome.gui.forum.ForumMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,6 +29,12 @@ import java.util.List;
 
 public class ForumBlock extends ConstructableBlock {
 
+    /* LOCALISATION */
+    private static final Component hasCityError    = Component.translatable("city.rome.has_city");
+    private static final Component ruinedCity      = Component.translatable("city.rome.ruined_city");
+    private static final String possessiveCity     = "city.rome.name";
+    private static final String cityAnnexBuildings = "city.rome.annex_building_count";
+
     public ForumBlock(Properties properties) {
         super(properties);
     }
@@ -35,123 +45,87 @@ public class ForumBlock extends ConstructableBlock {
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(level, pos, state, placer, stack);
+    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
+        super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
 
-        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-            CityManager manager = CityManager.get(serverLevel);
+        if(level.isClientSide() || !(level instanceof ServerLevel serverLevel)) return;
 
-            // Check if this location is already inside an existing city
-            if (manager.getCityAt(pos) == null) {
-                String cityName = placer != null ? placer.getName().getString() + "'s Colonia" : "New Rome";
-                manager.registerCity(cityName, pos);
-
-                // Get the newly created city so we can read its radius
-                City newCity = manager.getCityAt(pos);
-
-                if (newCity != null) {
-                    int r = newCity.getRadius();
-                    int buildingsFound = 0;
-
-                    // PERFORMANCE: We limit the Y-scan to 64 blocks up and down so it doesn't
-                    // cause a massive lag spike by scanning the entire vertical sky limit.
-                    int minY = Math.max(serverLevel.getMinBuildHeight(), pos.getY() - 64);
-                    int maxY = Math.min(serverLevel.getMaxBuildHeight() - 1, pos.getY() + 64);
-
-                    BlockPos minPos = pos.offset(-r, 0, -r).atY(minY);
-                    BlockPos maxPos = pos.offset(r, 0, r).atY(maxY);
-
-                    // Scan the newly claimed area
-                    for (BlockPos scanPos : BlockPos.betweenClosed(minPos, maxPos)) {
-                        BlockState scanState = serverLevel.getBlockState(scanPos);
-
-                        if (scanState.getBlock() instanceof ConstructableBlock) {
-                            // --- NEW: ONLY ANNEX IF IT IS UNCLAIMED ---
-                            if (manager.getCityOwningBuilding(scanPos) == null) {
-                                newCity.addBuilding(scanPos.immutable());
-                                buildingsFound++;
-                            }
-                        }
-                    }
-
-                    // Save the newly annexed buildings to the disk
-                    manager.setDirty();
-
-                    if (placer instanceof Player player) {
-                        if (buildingsFound > 0) {
-                            player.displayClientMessage(
-                                    Component.literal("§6Colonia established! §eAnnexed " + buildingsFound + " existing buildings."),
-                                    false
-                            );
-                        } else {
-                            player.displayClientMessage(
-                                    Component.literal("§6Colonia established! Grid coordinates registered."),
-                                    false
-                            );
-                        }
-                    }
-                }
-            } else {
-                if (placer instanceof Player player) {
-                    player.displayClientMessage(Component.literal("§cThis area is already claimed by an existing settlement!"), false);
-                }
-            }
+        /* IS PLACED INSIDE CITY? */
+        CityManager cityManager = CityManager.get(serverLevel);
+        boolean hasCity = cityManager.getCityAt(blockPos) != null;
+        if(hasCity){
+            if (livingEntity instanceof Player player) player.displayClientMessage(hasCityError, true);
+            return;
         }
+
+        /* CREATE NEW CITY */
+        java.util.UUID ownerUUID = livingEntity instanceof Player player ? player.getUUID() : null;
+        City newCity = cityManager.foundNewCity(createNameForCity(livingEntity, itemStack), blockPos, ownerUUID);
+
+        /* DISPLAY MESSAGE FOR ANNEXING BUILDINGS */
+        int buildingsFound = cityManager.annexPreExistingBuildings(newCity, serverLevel);
+        if (livingEntity instanceof Player player) player.displayClientMessage(Localisation.translatable(cityAnnexBuildings, buildingsFound, livingEntity), true);
+
+//        if (livingEntity instanceof Player player) {
+//
+//            if (buildingsFound > 0) {
+//                player.displayClientMessage(Component.literal("§6Colonia established! §eAnnexed " + buildingsFound + " existing buildings."), false);
+//            } else {
+//                player.displayClientMessage(Component.literal("§6Colonia established! Grid coordinates registered."), false);
+//            }
+//        }
+
     }
 
+    private String createNameForCity(LivingEntity blockPlacer, ItemStack forumItem){
+        String cityName = Component.translatable("block.rome.forum").getString();
+
+        if(blockPlacer != null) {
+            cityName = Component.translatable(possessiveCity, blockPlacer.getName().getString()).getString();
+        }
+        if(forumItem.has(DataComponents.CUSTOM_NAME)) cityName = forumItem.getHoverName().getString();
+
+        return cityName;
+    }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
-            if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-                // Abandon the settlement
-                CityManager.get(serverLevel).removeCity(pos);
-            }
+            if (!level.isClientSide() && level instanceof ServerLevel serverLevel) CityManager.get(serverLevel).removeCity(pos);
             super.onRemove(state, level, pos, newState, isMoving);
         }
     }
 
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) return InteractionResult.SUCCESS;
 
-            // Get the city from the global manager
-            CityManager manager = CityManager.get((ServerLevel) level);
-            City city = manager.getCityAt(pos);
+        ServerLevel serverLevel = (ServerLevel) level;
+        CityManager cityManager = CityManager.get(serverLevel);
+        City thisCity = cityManager.getCityAt(pos);
 
-            if (city != null) {
-                // Open the menu, and WRITE the custom data to the network buffer!
-                List<ForumMenu.BuildingEntry> activeBuildings = new ArrayList<>();
-                for (BlockPos bPos : city.getBuildings()) {
-                    BlockState bState = level.getBlockState(bPos);
-                    if (bState.getBlock() instanceof ConstructableBlock) {
-                        activeBuildings.add(new ForumMenu.BuildingEntry(bPos, new ItemStack(bState.getBlock())));
-                    }
-                }
-
-                serverPlayer.openMenu(
-                        new SimpleMenuProvider(
-                                (id, inv, p) -> new ForumMenu(id, inv, city, activeBuildings),
-                                Component.literal(city.getName())
-                        ),
-                        buf -> {
-                            buf.writeUtf(city.getName());
-                            buf.writeBlockPos(city.getForumPos()); // NEW: Must match constructor order!
-                            buf.writeInt(city.getTier());
-                            buf.writeInt(city.getRadius());
-
-                            buf.writeInt(activeBuildings.size());
-                            for (ForumMenu.BuildingEntry entry : activeBuildings) {
-                                buf.writeBlockPos(entry.pos());
-                                ItemStack.STREAM_CODEC.encode(buf, entry.icon());
-                            }
-                        }
-                );
-            } else {
-                serverPlayer.displayClientMessage(Component.literal("§cThis Forum is ruined. Break and replace it to found a new city."), true);
-            }
+        /* NO CITY? */
+        if (thisCity == null) {
+            serverPlayer.displayClientMessage(ruinedCity, true);
+            return InteractionResult.SUCCESS;
         }
+
+        /* OPEN CITY MENU */
+        List<ForumMenu.BuildingEntry> displayBuildings = cityManager.getMenuBuildingEntries(thisCity, serverLevel);
+        openMenu(serverPlayer, thisCity, displayBuildings);
+
         return InteractionResult.SUCCESS;
+    }
+
+    private void openMenu(ServerPlayer serverPlayer, City thisCity, List<ForumMenu.BuildingEntry> displayBuildings) {
+
+        CityData cityData = CityData.from(thisCity, displayBuildings);
+        serverPlayer.openMenu(
+                new SimpleMenuProvider(
+                        (id, inv, p) -> new ForumMenu(id, inv, thisCity, displayBuildings),
+                        Component.literal(thisCity.getName())
+                ),
+                buf -> CityData.write(buf, cityData)
+        );
     }
 }

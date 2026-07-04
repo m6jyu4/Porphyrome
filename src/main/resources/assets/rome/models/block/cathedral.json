@@ -5,7 +5,7 @@
 	"render_type": "minecraft:cutout",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "rome:block/hagia_sophia",
+		"0": "rome:block/cathedral",
 		"particle": "block/sandstone"
 	},
 	"elements": [

@@ -1,6 +1,7 @@
 package com.m6jyu4.rome.item;
 
 import com.m6jyu4.rome.block.ConstructableBlock;
+import com.m6jyu4.rome.Localisation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -58,7 +59,7 @@ public class HammerItem extends Item {
 
         if (ticksUsed > CHARGE_DURATION_TICKS) {
             int buildCount = constructBuilding(serverLevel, player);
-            displayBuildCount(player, buildCount);
+            displayBuildCount(livingEntity, player, buildCount);
             playHammerParticle(serverLevel, player, buildCount);
             player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
         }
@@ -89,10 +90,10 @@ public class HammerItem extends Item {
         return buildCount;
     }
 
-    private void displayBuildCount(Player player, int buildCount){
+    private void displayBuildCount(LivingEntity livingEntity, Player player, int buildCount){
         Component message;
-        if (buildCount >= 2) message = Component.translatable("item.rome.hammer.yes_build_plural", buildCount).withColor(0x55FF55);
-        else if (buildCount == 1) message = Component.translatable("item.rome.hammer.yes_build_single", buildCount).withColor(0x55FF55);
+
+        if(buildCount >= 1) message = Localisation.translatable("item.rome.hammer.yes_build", buildCount, livingEntity).withColor(0x55FF55);
         else message = Component.translatable("item.rome.hammer.no_build").withColor(0xFF5555);
 
         player.displayClientMessage(message, true);
