@@ -1,4 +1,4 @@
-package com.m6jyu4.rome;
+package com.m6jyu4.rome.util;
 
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;

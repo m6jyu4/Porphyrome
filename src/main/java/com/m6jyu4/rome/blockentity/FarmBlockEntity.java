@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.blockentity;
 
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import com.m6jyu4.rome.block.FarmBlock;
 import com.m6jyu4.rome.capability.CropType;
 import com.m6jyu4.rome.capability.INetworkNode;

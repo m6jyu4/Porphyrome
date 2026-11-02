@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.gui.workstation;
 
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import com.m6jyu4.rome.gui.CustomEditBox;
 import com.m6jyu4.rome.recipe.WorkstationRecipe;
 import com.m6jyu4.rome.registry.ModRecipe;

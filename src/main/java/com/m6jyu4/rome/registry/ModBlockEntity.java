@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.registry;
 
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import com.m6jyu4.rome.block.temp.MimicBlockEntity;
 import com.m6jyu4.rome.blockentity.*;
 import net.minecraft.core.registries.BuiltInRegistries;

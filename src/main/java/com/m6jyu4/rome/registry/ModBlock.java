@@ -1,7 +1,7 @@
 package com.m6jyu4.rome.registry;
 
 import com.m6jyu4.rome.block.*;
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import com.m6jyu4.rome.block.temp.MimicBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

@@ -1,13 +1,13 @@
 package com.m6jyu4.rome.block;
 
 
-import com.m6jyu4.rome.Constant;
-import com.m6jyu4.rome.Localisation;
+import com.m6jyu4.rome.util.Localisation;
 import com.m6jyu4.rome.blockentity.ForumBlockEntity;
 import com.m6jyu4.rome.city.City;
 import com.m6jyu4.rome.city.CityData;
 import com.m6jyu4.rome.city.CityManager;
 import com.m6jyu4.rome.gui.forum.ForumMenu;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -24,16 +24,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ForumBlock extends ConstructableBlock {
 
-    /* LOCALISATION */
-    private static final Component hasCityError    = Component.translatable("city.rome.has_city");
-    private static final Component ruinedCity      = Component.translatable("city.rome.ruined_city");
-    private static final String possessiveCity     = "city.rome.name";
-    private static final String cityAnnexBuildings = "city.rome.annex_building_count";
+    private static final Component hasCityError    = Component.translatable("city.rome.has_city").withColor(ChatFormatting.RED.getColor());
+    private static final Component ruinedCity      = Component.translatable("city.rome.ruined_city").withColor(ChatFormatting.RED.getColor());
+    private static final String possessiveCity     = "city.rome.name"; //
+    private static final String cityAnnexBuildings = "city.rome.annex_building_count"; //.withColor
 
     public ForumBlock(Properties properties) {
         super(properties);
@@ -62,27 +60,16 @@ public class ForumBlock extends ConstructableBlock {
         java.util.UUID ownerUUID = livingEntity instanceof Player player ? player.getUUID() : null;
         City newCity = cityManager.foundNewCity(createNameForCity(livingEntity, itemStack), blockPos, ownerUUID);
 
-        /* DISPLAY MESSAGE FOR ANNEXING BUILDINGS */
+        /* MESSAGE FOR ANNEXING BUILDINGS */
         int buildingsFound = cityManager.annexPreExistingBuildings(newCity, serverLevel);
-        if (livingEntity instanceof Player player) player.displayClientMessage(Localisation.translatable(cityAnnexBuildings, buildingsFound, livingEntity), true);
-
-//        if (livingEntity instanceof Player player) {
-//
-//            if (buildingsFound > 0) {
-//                player.displayClientMessage(Component.literal("§6Colonia established! §eAnnexed " + buildingsFound + " existing buildings."), false);
-//            } else {
-//                player.displayClientMessage(Component.literal("§6Colonia established! Grid coordinates registered."), false);
-//            }
-//        }
+        if (livingEntity instanceof Player player) player.displayClientMessage(Localisation.translatable(cityAnnexBuildings, buildingsFound, livingEntity).withColor(ChatFormatting.GOLD.getColor()), true);
 
     }
 
     private String createNameForCity(LivingEntity blockPlacer, ItemStack forumItem){
         String cityName = Component.translatable("block.rome.forum").getString();
 
-        if(blockPlacer != null) {
-            cityName = Component.translatable(possessiveCity, blockPlacer.getName().getString()).getString();
-        }
+        if(blockPlacer != null) cityName = Component.translatable(possessiveCity, blockPlacer.getName().getString()).getString();
         if(forumItem.has(DataComponents.CUSTOM_NAME)) cityName = forumItem.getHoverName().getString();
 
         return cityName;

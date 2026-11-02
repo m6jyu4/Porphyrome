@@ -1,7 +1,8 @@
 package com.m6jyu4.rome.item;
 
 import com.m6jyu4.rome.block.ConstructableBlock;
-import com.m6jyu4.rome.Localisation;
+import com.m6jyu4.rome.util.Localisation;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,9 @@ public class HammerItem extends Item {
     private static final int COOLDOWN_TICKS = 20;
     private static final int CHARGE_DURATION_TICKS = 20;
 
+    private static final String hammerCharging = "item.rome.hammer.charging";  // .withColor
+    private static final String hammerBuild = "item.rome.hammer.build"; // .withColor
+
     public HammerItem(Properties properties) { super(properties); }
 
     @Override
@@ -40,12 +44,12 @@ public class HammerItem extends Item {
     }
 
     private void displayHammerPercentage(Player player, int percentage){
-        int color = percentage >= 100 ? 0x00FF00 : 0xFFAA00;
+        int colour = percentage >= 100 ? ChatFormatting.GREEN.getColor() : ChatFormatting.GOLD.getColor();
         String iconKey = percentage >= 100 ? "item.rome.hammer.icon.ready" : "item.rome.hammer.icon.charging";
         player.displayClientMessage(
-                Component.translatable(iconKey).withColor(color)
+                Component.translatable(iconKey).withColor(colour)
                         .append(Component.literal(" "))
-                        .append(Component.translatable("item.rome.hammer.charging", percentage).withColor(color)),
+                        .append(Component.translatable(hammerCharging, percentage).withColor(colour)),
                 true
         );
     }
@@ -91,11 +95,8 @@ public class HammerItem extends Item {
     }
 
     private void displayBuildCount(LivingEntity livingEntity, Player player, int buildCount){
-        Component message;
-
-        if(buildCount >= 1) message = Localisation.translatable("item.rome.hammer.yes_build", buildCount, livingEntity).withColor(0x55FF55);
-        else message = Component.translatable("item.rome.hammer.no_build").withColor(0xFF5555);
-
+        int colour = buildCount > 0 ? ChatFormatting.GREEN.getColor(): ChatFormatting.RED.getColor();
+        Component message = Localisation.translatable(hammerBuild, buildCount, livingEntity).withColor(colour);
         player.displayClientMessage(message, true);
     }
 

@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.network;
 
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 

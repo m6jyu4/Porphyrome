@@ -6,9 +6,10 @@ import com.m6jyu4.rome.gui.workstation.WorkstationScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class ModClientEvent {
-    public void registerScreens(RegisterMenuScreensEvent event) {
+    public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenuType.WORKSTATION_MENU.get(), WorkstationScreen::new);
         event.register(ModMenuType.FORUM_MENU.get(), ForumScreen::new);
     }
@@ -18,4 +19,5 @@ public class ModClientEvent {
                 MimicGeometryLoader.INSTANCE
         );
     }
+
 }

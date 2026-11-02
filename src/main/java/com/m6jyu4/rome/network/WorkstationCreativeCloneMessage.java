@@ -1,12 +1,9 @@
 package com.m6jyu4.rome.network;
 
-import com.m6jyu4.rome.Constant;
-import com.m6jyu4.rome.city.City;
-import com.m6jyu4.rome.city.CityManager;
+import com.m6jyu4.rome.util.Constant;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;

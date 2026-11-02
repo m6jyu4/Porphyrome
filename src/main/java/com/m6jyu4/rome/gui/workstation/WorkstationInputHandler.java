@@ -1,6 +1,6 @@
 package com.m6jyu4.rome.gui.workstation;
 
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import com.m6jyu4.rome.network.WorkstationCreativeCloneMessage;
 import com.m6jyu4.rome.network.WorkstationRecipeMessage;
 import com.m6jyu4.rome.recipe.WorkstationRecipe;

@@ -2,7 +2,7 @@ package com.m6jyu4.rome.registry;
 
 import com.m6jyu4.rome.gui.forum.ForumMenu;
 import com.m6jyu4.rome.gui.workstation.WorkstationMenu;
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;

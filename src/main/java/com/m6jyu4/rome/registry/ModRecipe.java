@@ -1,7 +1,7 @@
 package com.m6jyu4.rome.registry;
 
 import com.m6jyu4.rome.recipe.WorkstationRecipe;
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;

@@ -2,7 +2,7 @@ package com.m6jyu4.rome.network;
 
 import com.m6jyu4.rome.gui.workstation.WorkstationMenu;
 import com.m6jyu4.rome.recipe.WorkstationRecipe;
-import com.m6jyu4.rome.Constant;
+import com.m6jyu4.rome.util.Constant;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
